@@ -18,15 +18,9 @@
           Continue
         </button>
         <div class="text-center">or</div>
-          <NuxtLink  :to="{name : 'companies'}" class="w-full border btn btn-white">
+          <NuxtLink :to="{name : 'companies'}" class="w-full border btn btn-white">
               Create New Company
           </NuxtLink>
       </div>
     </section>
   </template>
-
-<script>
-export default{
-  middleware: 'auth'
-}
-</script>
