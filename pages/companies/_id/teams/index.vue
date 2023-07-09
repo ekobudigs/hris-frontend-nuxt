@@ -43,36 +43,19 @@
             </div>
 
             <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:gap-10 lg:gap-3">
-                <div class="items-center card py-6 md:!py-10 md:!px-[38px] !gap-y-0">
+                <p v-if="$fetchState.pending">Fetching teams...</p>
+                <div class="items-center card py-6 md:!py-10 md:!px-[38px] !gap-y-0" v-else
+               v-for="team in teams.data.result.data">
                     <a href="#" class="absolute inset-0 focus:ring-2 ring-primary rounded-[26px]"></a>
-                    <img src="/assets/svgs/ric-box.svg" alt="">
+                    <img :src="team.icon" alt="">
                     <div class="mt-6 mb-1 font-semibold text-center text-dark">
-                        Growth Marketing
+                       {{ team.name }}
                     </div>
                     <p class="text-center text-grey">
-                        12 People
+                        {{ team.employees_count }} People
                     </p>
                 </div>
-                <div class="items-center card py-6 md:!py-10 md:!px-[38px] !gap-y-0">
-                    <a href="#" class="absolute inset-0 focus:ring-2 ring-primary rounded-[26px]"></a>
-                    <img src="/assets/svgs/ric-target.svg" alt="">
-                    <div class="mt-6 mb-1 font-semibold text-center text-dark">
-                        User Growth
-                    </div>
-                    <p class="text-center text-grey">
-                        5,312 People
-                    </p>
-                </div>
-                <div class="items-center card py-6 md:!py-10 md:!px-[38px] !gap-y-0">
-                    <a href="#" class="absolute inset-0 focus:ring-2 ring-primary rounded-[26px]"></a>
-                    <img src="/assets/svgs/ric-award.svg" alt="">
-                    <div class="mt-6 mb-1 font-semibold text-center text-dark">
-                        Gamification
-                    </div>
-                    <p class="text-center text-grey">
-                        893 People
-                    </p>
-                </div>
+
             </div>
         </section>
     </div>
@@ -82,6 +65,22 @@
    <script>
        export default{
          layout: 'dashboard',
-         middleware: 'auth'
+         middleware: 'auth',
+         data() {
+    return {
+        teams: [],
+
+    }
+  },
+  async fetch() {
+    this.teams = await this.$axios.get('/team', {
+        params: {
+            company_id: this.$route.params.id,
+            limit: 100
+        }
+    })
+  },
+
+
        }
    </script>
