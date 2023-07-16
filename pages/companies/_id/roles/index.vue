@@ -42,66 +42,21 @@
             </div>
 
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-[30px]">
-                <div class="items-center card !flex-row gap-4">
+                <p v-if="$fetchState.pending">Fetching teams...</p>
+                <div class="items-center card !flex-row gap-4" v-else
+               v-for="role in roles.data.result.data">
                     <a href="#" class="absolute inset-0 focus:ring-2 ring-primary rounded-[26px]"></a>
                     <img src="/assets/svgs/ric-flag.svg" alt="">
                     <div>
                         <div class="mb-1 font-semibold text-dark">
-                            Product Designer
+                           {{ role.name }}
                         </div>
                         <p class="text-grey">
-                            12 people assigned
+                            {{ role.employees_count }} people assigned
                         </p>
                     </div>
                 </div>
-                <div class="items-center card !flex-row gap-4">
-                    <a href="#" class="absolute inset-0 focus:ring-2 ring-primary rounded-[26px]"></a>
-                    <img src="/assets/svgs/ric-flag.svg" alt="">
-                    <div>
-                        <div class="mb-1 font-semibold text-dark">
-                            iOS Engineer
-                        </div>
-                        <p class="text-grey">
-                            12 people assigned
-                        </p>
-                    </div>
-                </div>
-                <div class="items-center card !flex-row gap-4">
-                    <a href="#" class="absolute inset-0 focus:ring-2 ring-primary rounded-[26px]"></a>
-                    <img src="/assets/svgs/ric-flag.svg" alt="">
-                    <div>
-                        <div class="mb-1 font-semibold text-dark">
-                            Marketing
-                        </div>
-                        <p class="text-grey">
-                            12 people assigned
-                        </p>
-                    </div>
-                </div>
-                <div class="items-center card !flex-row gap-4">
-                    <a href="#" class="absolute inset-0 focus:ring-2 ring-primary rounded-[26px]"></a>
-                    <img src="/assets/svgs/ric-flag.svg" alt="">
-                    <div>
-                        <div class="mb-1 font-semibold text-dark">
-                            DevOps Power
-                        </div>
-                        <p class="text-grey">
-                            12 people assigned
-                        </p>
-                    </div>
-                </div>
-                <div class="items-center card !flex-row gap-4">
-                    <a href="#" class="absolute inset-0 focus:ring-2 ring-primary rounded-[26px]"></a>
-                    <img src="/assets/svgs/ric-flag.svg" alt="">
-                    <div>
-                        <div class="mb-1 font-semibold text-dark">
-                            Quality Assurance
-                        </div>
-                        <p class="text-grey">
-                            12 people assigned
-                        </p>
-                    </div>
-                </div>
+
             </div>
         </section>
     </div>
@@ -109,8 +64,24 @@
 </template>
 
 <script>
-    export default{
-      layout: 'dashboard',
-      middleware: 'auth'
+       export default{
+         layout: 'dashboard',
+         middleware: 'auth',
+         data() {
+    return {
+        roles: [],
+
     }
-</script>
+  },
+  async fetch() {
+    this.roles = await this.$axios.get('/role', {
+        params: {
+            company_id: this.$route.params.id,
+            limit: 100,
+        }
+    })
+  }
+
+
+       }
+   </script>

@@ -39,7 +39,7 @@
                         </div>
                         <p class="text-grey">Your team powers</p>
                     </div>
-                    <NuxtLink  :to="{name : 'employees-create' }" class="btn btn-primary">Add Employee</NuxtLink>
+                    <NuxtLink  :to="{name : 'companies-id-employees-create' }" class="btn btn-primary">Add Employee</NuxtLink>
                 </div>
             </div>
 
@@ -92,7 +92,7 @@
 
             <div class="grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4 xl:gap-10 lg:gap-3">
                 <!-- Card -->
-                <p v-if="$fetchState.pending">Fetching teams...</p>
+                <p v-if="$fetchState.pending">Fetching EMPLOYEE...</p>
                 <div class="items-center card py-6 md:!py-10 md:!px-[38px] !gap-y-0"  v-else
                v-for="employee in employees.data.result.data">
                     <a href="#" class="absolute inset-0 focus:ring-2 ring-primary rounded-[26px]"></a>
